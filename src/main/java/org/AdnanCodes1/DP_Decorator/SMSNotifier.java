@@ -3,12 +3,20 @@ package org.AdnanCodes1.DP_Decorator;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.mail.MessagingException;
 
 public class SMSNotifier extends NotifierDecorator{
 
-    public static final String ACCOUNT_SID = "AC2249fa49f4ae15de9fd214baeed2e9ee";
-    public static final String AUTH_TOKEN = "7c4f99c25635c76646d2a8d185eb97a4";
+    private static final Dotenv dotenv = Dotenv.configure()
+            .directory(".")
+            .ignoreIfMalformed()
+            .ignoreIfMissing()
+            .load();
+    public static final String ACCOUNT_SID = dotenv.get("ACCOUNT_SID");
+    public static final String AUTH_TOKEN = dotenv.get("AUTH_TOKEN");
+    public static final String TWILIO_FROM_NUMBER = dotenv.get("TWILIO_FROM_NUMBER");
+    public static final String TWILIO_TO_NUMBER = dotenv.get("TWILIO_TO_NUMBER");
 
     public SMSNotifier(Notifier notifier) {
         super(notifier);
@@ -20,8 +28,8 @@ public class SMSNotifier extends NotifierDecorator{
 
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message twilioMessage = Message.creator(
-                new PhoneNumber("+212750949373"),
-                new PhoneNumber("+16089057142"),
+                new PhoneNumber(TWILIO_TO_NUMBER),
+                new PhoneNumber(TWILIO_FROM_NUMBER),
                 message
         ).create();
 
