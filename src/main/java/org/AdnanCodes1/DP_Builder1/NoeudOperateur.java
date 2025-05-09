@@ -1,22 +1,22 @@
-package org.AdnanCodes1.DP_Builder;
+package org.AdnanCodes1.DP_Builder1;
 
 public class NoeudOperateur implements Noeud{
 
     private char operateur;
     private Noeud gauche;
-    private Noeud droit;
+    private Noeud droite;
 
-    public NoeudOperateur(char operateur, Noeud gauche, Noeud droit) {
+    public NoeudOperateur(char operateur, Noeud gauche, Noeud droite) {
         this.operateur = operateur;
         this.gauche = gauche;
-        this.droit = droit;
+        this.droite = droite;
     }
 
     @Override
     public int evaluer() {
 
         int g = gauche.evaluer();
-        int d = droit.evaluer();
+        int d = droite.evaluer();
 
         switch (operateur) {
             case '+': return g + d;
@@ -29,6 +29,6 @@ public class NoeudOperateur implements Noeud{
 
     @Override
     public String toString() {
-        return "(" + gauche + " " + operateur + " " + droit + ")";
+        return "(" + gauche + " " + operateur + " " + droite + ")";
     }
 }
